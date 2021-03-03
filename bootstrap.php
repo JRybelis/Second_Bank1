@@ -3,7 +3,7 @@
 session_start();
 
 define('URL', 'http://localhost/second_bank/'); 
-define('DIR', __DIR__.'/');
+define('DIR',__DIR__.'/');
 
 require DIR. 'resources/app/functions.php';
 
