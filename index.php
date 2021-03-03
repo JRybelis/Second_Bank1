@@ -15,5 +15,7 @@ require __DIR__.'/bootstrap.php';
     <h1>Second Bank</h1>
     <a href="<?= URL ?>login.php"><button class="navigation">Login to your personal Second Bank account</button></a>
     <a href="<?= URL ?>private.php"><button class="navigation">Clients' area</button></a> 
+
+    
 </body>
 </html>

@@ -73,8 +73,41 @@ function selectAccount(int $id) : ?array {
 }
 
 // account update scenario
+function deposit(int $id, $amount) : void {
+    $accounts = readData(); // all accounts on file.
+    $account = selectAccount($id);
+    if(!$account) {
+        return;
+    }
+    $account['balance'] += $amount;
+    deleteAccount($id);
+    $accounts = readData(); // accounts on file, without the one selected, which was deleted, in order to be replaced with the updated one.
+    $accounts[] = $account;
+    writeData($accounts);
+}
 
+function withdraw(int $id, $amount) : void {
+    $accounts = readData(); // all accounts on file.
+    $account = selectAccount($id);
+    if(!$account) {
+        return;
+    }
+    $account['balance'] -= $amount;
+    deleteAccount($id);
+    $accounts = readData(); // accounts on file, without the one selected, which was deleted, in order to be replaced with the updated one.
+    $accounts[] = $account;
+    writeData($accounts);
+}
 
 // account delete scenario
-
+function deleteAccount(int $id) : void {
+    $accounts = readData();
+    foreach($accounts as $key => $account){
+        if ($account ['id'] == $id) {
+            unset($accounts[$key]);
+            writeData($accounts);
+            return;
+        }
+    }
+}
 
