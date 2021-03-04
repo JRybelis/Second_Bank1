@@ -29,26 +29,18 @@ function getNextId() : int {
     return $id;
 }
 
+function patronAge(string $dob) {
+    $today = new DateTime('now');
+    $dob = date_create_from_format('Y-m-d', $dob);
+    $dateDifference = date_diff($today, $dob);
+    $patronAge = ($dateDifference -> format('%y'));
+    return $patronAge;
+}
+
 
 // Account create scenario:
 function create(string $name, string $surname, string $dob, string $idNo, string $accNo, float $balance = 0) : void {
     $accounts = readData();
-    // $today = new DateTime('now');
-    // $patronAge = $today - $dob;
-    // if($patronAge < 18) {
-    //     $_SESSION['error_message'] = 'Second Bank follows the national regulation in not permitting minors to open and operate bank accounts. If you still wish to open an account, please call our client service at +370 666 70417 to discuss your options.';
-    //     header('Location'.URL.'private.php');
-    //     exit;
-    // } elseif (
-    //     $dob < '2000-01-01' && $dob[0] != 3 || 
-    //     $dob < '2000-01-01' && $dob[0] != 4 || 
-    //     $dob > '2000-01-01' && $dob[0] != 5 || 
-    //     $dob > '2000-01-01' && $dob[0] != 6) 
-    //     {
-    //     $_SESSION['error_message'] = 'Please double check your personal identity number and / or date of birth was entered correctly and try again.';
-    //     header('Location'.URL.'private.php');
-    //     exit;
-    // } elseif () 
     $id = getNextId();
     $account = [
         'id' => $id,
@@ -110,4 +102,3 @@ function deleteAccount(int $id) : void {
         }
     }
 }
-
