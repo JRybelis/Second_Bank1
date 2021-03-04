@@ -23,7 +23,7 @@ if(!isset($_SESSION['login']) || 1 != $_SESSION['login']) {
     <br><br>
     <a href="<?= URL ?>create.php"><button class="create">Open new account</button>
     </a>
-    <button class="delete">Close account</button>
+    <!-- <button class="delete">Close account</button> -->
     <br><br>
     <a href="<?= URL ?>"><button class="navigation">Back to home page</button></a>
     
@@ -39,7 +39,7 @@ if(!isset($_SESSION['login']) || 1 != $_SESSION['login']) {
         <span> Funds available: <?= $account['balance'] ?><br></span>
         <a href="<?= URL ?>deposit.php?id= <?= $account['id'] ?>"><button class="update">Make a deposit</button></a>
         <a href="<?= URL ?>withdrawal.php?id= <?= $account['id'] ?>"><button class="update">Make a withdrawal</button></a>
-        <form action="<?= URL ?> delete.php?id=<?= $account['id'] ?>" method="post">
+        <form action="<?= URL ?>delete.php?id=<?= $account['id'] ?>" method="post">
         <button type="submit" class="delete">Close the account</button></form>
         
         </li>
