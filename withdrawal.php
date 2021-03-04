@@ -5,13 +5,23 @@ require __DIR__.'/bootstrap.php';
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_GET['id'] ?? 0;
     $id = (int) $id;
-
+    $account = selectAccount($id);
     $amount = $_POST['amount'] ?? 0;
     $amount = (int) $amount;
-    withdraw($id, $amount);
+    if($amount > 3500) {
+        $errorDisplayStatus = 'block';
+        $invalidAmountError = 'Electronic withdrawals are limited to £3500 per transaction. Please visit one of our branches to take out the sum you intended, or try a lower amount.';
+    } elseif ($amount == 0 || $amount < 0) {
+        $errorDisplayStatus = 'block';
+        $invalidAmountError = 'Please enter a positive amount to withdraw.';
+    } elseif ($amount > $account['balance']) {
+        $errorDisplayStatus = 'block';
+        $invalidAmountError = 'You may not overdraw your account. Please ensure the amount you wish to take out is not greater than the balance of funds you hold in this account.';
+    } else {
+        withdraw($id, $amount);
     header('Location: '.URL.'private.php');
     exit;
-    
+    }
 }
 
 // GET scenario:
@@ -42,6 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
     
     <form action="<?= URL ?>withdrawal.php?id= <?= $account['id'] ?>" method="post">Money to withdraw:
     <input type="text" name="amount">
+    <span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $invalidAmountError ?></span>
     <button type="submit">Submit</button>
     </form>
 </body>

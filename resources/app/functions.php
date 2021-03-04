@@ -104,7 +104,6 @@ function deleteAccount(int $id) : void {
     $accounts = readData();
     foreach($accounts as $key => $account){
         if ($account ['id'] == $id) {
-            _d($accounts[$key]);
             unset($accounts[$key]);
             writeData($accounts);
             return;

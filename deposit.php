@@ -8,9 +8,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $amount = $_POST['amount'] ?? 0;
     $amount = (int) $amount;
-    deposit($id, $amount);
-    header('Location: '.URL.'private.php');
-    exit;
+    if($amount > 25000 ) {
+        $errorDisplayStatus = 'block';
+        $invalidAmountError = 'Following the governmental anti-money-laundering directives, Second Bank does not permit electronic deposits worth over £25000. Please visit one of our branches to make your intended deposit, or try a lower amount.';
+    } elseif ($amount == 0 || $amount < 0) {
+        $errorDisplayStatus = 'block';
+        $invalidAmountError = 'You must deposit a positive amount of money.';
+    }
+     else {
+        deposit($id, $amount);    
+        header('Location: '.URL.'private.php');
+        exit;
+    }
+    
+    
     
 }
 
@@ -42,6 +53,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
     
     <form action="<?= URL ?>deposit.php?id= <?= $account['id'] ?>" method="post">Money to deposit:
     <input type="text" name="amount">
+    <span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $invalidAmountError ?></span>
     <button type="submit">Submit</button>
     </form>
 </body>

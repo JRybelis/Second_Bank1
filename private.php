@@ -36,7 +36,7 @@ if(!isset($_SESSION['login']) || 1 != $_SESSION['login']) {
         <span> Date of birth: <?= $account['dateOfBirth'] ?><br></span>
         <span> National identity number: <?= $account['personalIdentityNumber'] ?><br></span>
         <span> Account number: <?= $account['accountNumber'] ?><br></span>
-        <span> Funds available: <?= $account['balance'] ?><br></span>
+        <span> Funds available: £<?= $account['balance'] ?><br></span>
         <a href="<?= URL ?>deposit.php?id= <?= $account['id'] ?>"><button class="update">Make a deposit</button></a>
         <a href="<?= URL ?>withdrawal.php?id= <?= $account['id'] ?>"><button class="update">Make a withdrawal</button></a>
         <form action="<?= URL ?>delete.php?id=<?= $account['id'] ?>" method="post">
