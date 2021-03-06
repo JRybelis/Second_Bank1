@@ -9,30 +9,38 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $surname = $_POST['lastName'] ?? 0;
     $dob = $_POST['dateOfBirth'] ?? 0;
     $dob = (string) $dob;
+    $dobShort = date_create_from_format('y-m-d', $dob);
     $idNo = $_POST['personalIdentityNumber'] ?? 0;
     $idNo = (int) $idNo; 
+    $idArray = str_split($idNo, 1);
     $accNo = $_POST['accountNumber'] ?? 0;
     
-    // } elseif (
-    //     $dob < '2000-01-01' && $dob[0] != 3 || 
-    //     $dob < '2000-01-01' && $dob[0] != 4 || 
-    //     $dob > '2000-01-01' && $dob[0] != 5 || 
-    //     $dob > '2000-01-01' && $dob[0] != 6) 
-    //     {
-    //     $_SESSION['error_message'] = 'Please double check your personal identity number and / or date of birth was entered correctly and try again.';
-    //     header('Location'.URL.'private.php');
-    //     exit;
-    // } elseif () 
     if(strlen($name) < 2) {
         $errorDisplayStatus = 'block';
-        $invalidNameLengthError = 'Your first name must be at least two characters long. Use of initials is not allowed.';
-    } elseif (strlen($surname) < 2) {
+        $nameError = 'Your first name must be at least two characters long. Use of initials is not allowed.';
+    } elseif (checkName($name) == false) {
+        $errorDisplayStatus = 'block';
+        $nameError = 'Your name must contain letters only.';
+    } elseif (strlen($surname) < 2) { // does not fire?? 
         $errorDisplayStatus = 'block';
         $invalidSurnameLengthError = 'Your surname must be at least two characters long. Use of initials is not allowed.';
+        _d(checkName($surname));
+        _d($surname);
+        _d(strlen($surname));
+    } elseif (checkName($surname) == false) {
+        $errorDisplayStatus = 'block';
+        $surnameError = 'Your last name must contain letters only.';
     } elseif (patronAge($dob) < 18) {
         $errorDisplayStatus = 'block';
         $invalidAgeError = 'Second Bank follows the national regulation on not permitting minors to independently open and operate bank accounts. If you still wish to open an account, please call our client service at +370 666 70417 to discuss your options.';
-    } else {
+    // } elseif ( $dob < '2000-01-01' && $idArray[0] != 3 || $dob < '2000-01-01' && $idArray[0] != 4 || $dob > '2000-01-01' && $idArray[0] != 5 || $dob > '2000-01-01' && $idArray[0] != 6) {
+    //     $errorDisplayStatus = 'block';
+    //     $invalidIdError = 'Please ensure the first digit of your personal identity code is correct.';
+    //     // _d(gettype($dob));
+    //     _d($dob);
+    //     _d($idArray[0]);
+    } 
+    else {
         patronAge($dob);
         create($name, $surname, $dob, $idNo, $accNo);
         header('Location: '.URL.'private.php'); 
@@ -57,9 +65,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <a href="<?= URL ?>"><button class="navigation">Back to home page</button></a>
 
     <form action="<?= URL ?>create.php" method="post">
-        <br> Your first name: <input type="text" name="name" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $invalidNameLengthError ?></span><br>
+        <br> Your first name: <input type="text" name="name" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $nameError ?></span><br>
 
-        <br> Your last name: <input type="text" name="lastName" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $invalidSurnameLengthError ?></span><br>
+        <br> Your last name: <input type="text" name="lastName" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $surnameError ?></span><br>
         
         <br> Your date of birth: <input type="date" name="dateOfBirth" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $invalidAgeError ?></span><br>
         

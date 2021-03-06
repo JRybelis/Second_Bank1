@@ -102,3 +102,8 @@ function deleteAccount(int $id) : void {
         }
     }
 }
+
+//validations:
+function checkName(string $stringInput) {
+    return preg_match("/^[[\p{L}]+[\p{L}\'\-\]{0,26}+]$/", $stringInput) ? true : false;
+}
