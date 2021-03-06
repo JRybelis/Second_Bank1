@@ -31,7 +31,7 @@ function getNextId() : int {
 
 function patronAge(string $dob) {
     $today = new DateTime('now');
-    $dob = date_create_from_format('Y-m-d', $dob);
+    $dob = date_create_from_format('!Y-m-d', $dob);
     $dateDifference = date_diff($today, $dob);
     $patronAge = ($dateDifference -> format('%y'));
     return $patronAge;
@@ -39,13 +39,14 @@ function patronAge(string $dob) {
 
 
 // Account create scenario:
-function create(string $name, string $surname, string $dob, string $idNo, string $accNo, float $balance = 0) : void {
+function create(string $name, string $surname, string $gender, string $dob, string $idNo, string $accNo, float $balance = 0) : void {
     $accounts = readData();
     $id = getNextId();
     $account = [
         'id' => $id,
         'name' => $name,
         'lastName' => $surname,
+        'gender' => $gender,
         'dateOfBirth' => $dob,
         'personalIdentityNumber' => $idNo,
         'accountNumber' => $accNo,

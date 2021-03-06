@@ -7,9 +7,9 @@ $iban = 'LT601010012345678901';
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'] ?? 0;
     $surname = $_POST['lastName'] ?? 0;
+    $gender = $_POST['gender'] ?? 0;
     $dob = $_POST['dateOfBirth'] ?? 0;
     $dob = (string) $dob;
-    $dobShort = date_create_from_format('y-m-d', $dob);
     $idNo = $_POST['personalIdentityNumber'] ?? 0;
     $idNo = (int) $idNo; 
     $idArray = str_split($idNo, 1);
@@ -33,16 +33,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (patronAge($dob) < 18) {
         $errorDisplayStatus = 'block';
         $invalidAgeError = 'Second Bank follows the national regulation on not permitting minors to independently open and operate bank accounts. If you still wish to open an account, please call our client service at +370 666 70417 to discuss your options.';
-    // } elseif ( $dob < '2000-01-01' && $idArray[0] != 3 || $dob < '2000-01-01' && $idArray[0] != 4 || $dob > '2000-01-01' && $idArray[0] != 5 || $dob > '2000-01-01' && $idArray[0] != 6) {
-    //     $errorDisplayStatus = 'block';
-    //     $invalidIdError = 'Please ensure the first digit of your personal identity code is correct.';
-    //     // _d(gettype($dob));
-    //     _d($dob);
-    //     _d($idArray[0]);
-    } 
+    } elseif ($dob < '2000-01-01' && $idArray[0] != 3 || $dob < '2000-01-01' && $idArray[0] != 4 || $dob > '2000-01-01' && $idArray[0] != 5 || $dob > '2000-01-01' && $idArray[0] != 6) {
+        $errorDisplayStatus = 'block';
+        $invalidIdError = 'Please ensure the first digit of your personal identity code is correct.';
+        
+        _d($dob < '2000-01-01');
+        _d($idArray[0] != 3);
+        _d($idArray[0]);
+        _d(substr($idNo, 1, 6));
+        _dc(DateTime::getLastErrors());
+    } elseif ((substr($dob, 2, 2).substr($dob, 5,2).substr($dob, 8, 2)) != substr($idNo, 1, 6) ) {
+        $errorDisplayStatus = 'block';
+        $invalidIdError = 'Please ensure the second through to the seventh digits of your personal identity code are correct.';
+    }
     else {
         patronAge($dob);
-        create($name, $surname, $dob, $idNo, $accNo);
+        create($name, $surname, $gender, $dob, $idNo, $accNo);
         header('Location: '.URL.'private.php'); 
         exit;
     }
@@ -68,6 +74,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <br> Your first name: <input type="text" name="name" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $nameError ?></span><br>
 
         <br> Your last name: <input type="text" name="lastName" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $surnameError ?></span><br>
+
+        <br> Your gender: <br><br><form action="<?= URL ?>create.php" method="post">
+            <input type="radio" id= "male" name="gender" value="male" required>
+            <label for="male">Male</label><br>
+            <input type="radio" id= "female" name="gender" value="female" required>
+            <label for="female">Female</label><br>
+        </form><br>
         
         <br> Your date of birth: <input type="date" name="dateOfBirth" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $invalidAgeError ?></span><br>
         
