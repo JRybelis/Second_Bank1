@@ -33,6 +33,7 @@ if(!isset($_SESSION['login']) || 1 != $_SESSION['login']) {
         <span>ID: <?= $account ['id'] ?><br></span>
         <span> Name: <?= $account['name'] ?><br></span>
         <span> Surname: <?= $account['lastName'] ?><br></span>
+        <span> Gender: <?= $account['gender'] ?><br></span>
         <span> Date of birth: <?= $account['dateOfBirth'] ?><br></span>
         <span> National identity number: <?= $account['personalIdentityNumber'] ?><br></span>
         <span> Account number: <?= $account['accountNumber'] ?><br></span>
