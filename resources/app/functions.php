@@ -39,6 +39,17 @@ function patronAge(string $dob) {
 
 
 // Account create scenario:
+function ibanGenerator() : string {
+    $iban[] = "L";
+    $iban[] = "T";
+    for ($i = 0; $i < 18; $i++){
+        $iban[] = rand(0, 9);
+    }
+    $iban = implode('', $iban);
+    return $iban;
+}
+
+
 function create(string $name, string $surname, string $gender, string $dob, string $idNo, string $accNo, float $balance = 0) : void {
     $accounts = readData();
     $id = getNextId();

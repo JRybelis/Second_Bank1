@@ -2,7 +2,9 @@
 
 require __DIR__.'/bootstrap.php';
 
-$iban = 'LT601010012345678901';
+// $iban = 'LT601010012345678901';
+$iban = ibanGenerator();
+
 // POST scenario:
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'] ?? 0;
