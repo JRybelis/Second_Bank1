@@ -54,11 +54,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         _d($idArray[0]);
         _d('The gender supplied is: ');
         _d($gender);
-        // _d(substr($idNo, 0, 1));
-        // _dc(DateTime::getLastErrors());
     } elseif ((substr($dob, 2, 2).substr($dob, 5,2).substr($dob, 8, 2)) != substr($idNo, 1, 6) ) {
         $errorDisplayStatus = 'block';
         $invalidIdError = 'Please ensure the second through to the seventh digits of your personal identity code are correct.';
+    } elseif (idCoefficient($idArray) != $idArray[10]) {
+        $errorDisplayStatus = 'block';
+        $invalidIdError = 'Please ensure the last digit of your personal identity code is correct.';
     }
     else {
         patronAge($dob);

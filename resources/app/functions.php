@@ -108,3 +108,41 @@ function deleteAccount(int $id) : void {
 function checkName(string $stringInput) {
     return preg_match("/^[[\p{L}]+[\p{L}\'\-\]{0,26}+]$/", $stringInput) ? true : false;
 }
+
+function idCoefficient(array $idArray) {
+    $multiplier = 1;
+    $idDigitSum = 0;
+    foreach ($idArray as $key => $value) {
+        if ($key == sizeof($idArray)) {
+            if ($idDigitSum % 11 != 10) {
+                $controlNo = ceil($idDigitSum % 11);
+                return $controlNo;
+            } else {
+                $idDigitSum = 0;
+                $multiplier = 3;
+                foreach($idArray as $key => $value) {
+                    if ($key == sizeof($idArray)) {
+                        if ($idDigitSum % 11 != 10) {
+                            $controlNo = ceil($idDigitSum % 11);
+                            return $controlNo;
+                        } else {
+                            $controlNo = 0;
+                        }
+                    }
+                    if ($key == sizeof($idArray-3)) {
+                        $multiplier = 1;
+                    }
+                    $idDigitSum += $value * $multiplier;
+                    $multiplier ++;
+                }
+            }
+        }
+        if ($key == sizeof($idArray-1)) {
+            $multiplier = 1;
+        }
+        $idDigitSum += $value * $multiplier;
+        $multiplier ++;
+}}
+// 3  8  9 0  7  2  5 1  6 3 
+// 3+16+27+0+35+12+35+8+54+3 = 193
+// 193 % 11 = 17.54545454545455
