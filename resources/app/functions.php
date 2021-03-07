@@ -109,7 +109,11 @@ function checkName(string $stringInput) {
     return preg_match("/^[[\p{L}]+[\p{L}\'\-\]{0,26}+]$/", $stringInput) ? true : false;
 }
 
-function idCoefficient(array $idArray) {
+function idNoFormat(string $idNo) {
+    return preg_match("/^\p{N}{0,11}+$/", $idNo) ? true : false;
+}
+
+function idCoefficient(array $idArray) : int {
     $multiplier = 1;
     $idDigitSum = 0;
     foreach ($idArray as $key => $value) {

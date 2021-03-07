@@ -33,6 +33,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (patronAge($dob) < 18) {
         $errorDisplayStatus = 'block';
         $invalidAgeError = 'Second Bank follows the national regulation on not permitting minors to independently open and operate bank accounts. If you still wish to open an account, please call our client service at +370 666 70417 to discuss your options.';
+    } elseif (idNoFormat($idNo) == false) {
+        $errorDisplayStatus = 'block';
+        $invalidIdError = 'Please ensure your personal identity code consists of digits only and is 11 characters long.';
     } elseif (
         ($dob < '2000-01-01' && $idArray[0] != 3 && $gender == 'male') || 
         ($dob < '2000-01-01' && $idArray[0] == 3 && $gender == 'female') || 
@@ -54,6 +57,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         _d($idArray[0]);
         _d('The gender supplied is: ');
         _d($gender);
+
     } elseif ((substr($dob, 2, 2).substr($dob, 5,2).substr($dob, 8, 2)) != substr($idNo, 1, 6) ) {
         $errorDisplayStatus = 'block';
         $invalidIdError = 'Please ensure the second through to the seventh digits of your personal identity code are correct.';
