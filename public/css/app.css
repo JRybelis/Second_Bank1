@@ -11349,3 +11349,12 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.navigation {
+  background-color: cornsilk;
+}
+
+.account {
+  padding: 26px;
+  border: 1px solid black;
+  text-align: center;
+}

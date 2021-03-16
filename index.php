@@ -10,7 +10,7 @@ require __DIR__.'/bootstrap.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing page</title>
-    <link rel="stylesheet" href="http://localhost/second_bank/public/css/app.css"
+    <link rel="stylesheet" href="http://localhost/second_bank/public/css/app.css?ver=<?= time() ?>"
 </head>
 <body class="p-3 mb-2 bg-secondary text-white">
     <div class="d-inline-block rounded-right p-3 mb-2 bg-light text-white">
