@@ -128,36 +128,41 @@ function idCoefficient(array $idArray) : int {
     $multiplier = 1;
     $idDigitSum = 0;
     foreach ($idArray as $key => $value) {
-        if ($key == sizeof($idArray)) {
-            if ($idDigitSum % 11 != 10) {
-                $controlNo = ceil($idDigitSum % 11);
-                return $controlNo;
-            } else {
-                $idDigitSum = 0;
-                $multiplier = 3;
-                foreach($idArray as $key => $value) {
-                    if ($key == sizeof($idArray)) {
-                        if ($idDigitSum % 11 != 10) {
-                            $controlNo = ceil($idDigitSum % 11);
-                            return $controlNo;
-                        } else {
-                            $controlNo = 0;
-                        }
-                    }
-                    if ($key == sizeof($idArray-3)) {
-                        $multiplier = 1;
-                    }
-                    $idDigitSum += $value * $multiplier;
-                    $multiplier ++;
-                }
-            }
-        }
-        if ($key == sizeof($idArray-1)) {
+        if ($key == (count($idArray))-2) {
             $multiplier = 1;
+        }
+        if ($key == (count($idArray))-1) {
+            break;
         }
         $idDigitSum += $value * $multiplier;
         $multiplier ++;
-}}
-// 3  8  9 0  7  2  5 1  6 3 
+    }
+    if ($idDigitSum % 11 != 10) {
+        _d('tavo paskutinis skaitmuo turi būti: '.ceil($idDigitSum % 11));
+        return ceil($idDigitSum % 11);
+    } else {
+        $idDigitSum = 0;
+        $multiplier = 3;
+        foreach($idArray as $key => $value) {
+            if ($key == (count($idArray))-4) {
+                $multiplier = 1;
+            }
+            if ($key == (count($idArray))-1) {
+                break;
+            }
+            $idDigitSum += $value * $multiplier;
+            $multiplier ++;
+        }
+        if ($idDigitSum % 11 != 10) {
+            _d('tavo paskutinis skaitmuo turi būti: '.ceil($idDigitSum % 11)); 
+            return ceil($idDigitSum % 11);    
+        } else {
+            _d('tavo paskutinis skaitmuo turi būti: '.'0');
+            return 0;
+        }
+    }
+}
+
+// 3  8  9 0  7  2  5 1 6 3 
 // 3+16+27+0+35+12+35+8+54+3 = 193
 // 193 % 11 = 17.54545454545455

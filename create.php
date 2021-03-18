@@ -92,7 +92,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <a href="<?= URL ?>private.php"><button class="navigation">Accounts overview</button></a>
     <a href="<?= URL ?>"><button class="navigation">Back to home page</button></a>
 
-    <form action="<?= URL ?>create.php" method="post">
+    <form id="createForm" action="<?= URL ?>create.php" method="post">
         <br> Your first name: <input type="text" name="name" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $nameError ?? '' ?></span><br>
 
         <br> Your last name: <input type="text" name="lastName" required> <br><span style="display: <?= $errorDisplayStatus ?? 'none' ?>"><?= $surnameError ?? '' ?></span><br>
@@ -110,7 +110,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <br> Reserved account number: <input type="text" name="accountNumber" required readonly value="<?= $iban ?>"> 
         
-        <br> <button type="submit">Submit</button>
+        <br> <button class="1accountDataSubmit" type="submit">Submit</button>
     </form>
     
 </body>
